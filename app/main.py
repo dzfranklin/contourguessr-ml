@@ -28,10 +28,14 @@ class ClassifyRequest(BaseModel):
 
 @app.post("/api/v0/classify")
 def post_classify(req: ClassifyRequest):
+    print("Received request to classify")
     with NamedTemporaryFile() as f:
         f.write(base64.b64decode(req.image_base64))
         f.seek(0)
-        return {"validity_score": classify_image(f.name)}
+        print("Predicting score")
+        score = classify_image(f.name)
+        print("Predicted ", str(score))
+        return {"validity_score": score}
 
 
 def classify_image(path: str) -> float:
