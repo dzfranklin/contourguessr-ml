@@ -34,7 +34,10 @@ spec:
     spec:
       containers:
         - name: classifier
-          image: ghcr.io/dzfranklin/cg-classifier:v0.2
+          image: ghcr.io/dzfranklin/cg-classifier:v0.3
           ports:
             - containerPort: 80
               name: http
+          env:
+            - name: MODEL_NAME
+              value: "model-20240501-133847"

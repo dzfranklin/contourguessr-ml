@@ -12,6 +12,9 @@ dotenv.load_dotenv()
 MODEL_FILE = os.environ.get("MODEL_FILE")
 if MODEL_FILE is None:
     raise Exception("MODEL_FILE environment variable is required")
+MODEL_NAME = os.environ.get("MODEL_NAME")
+if MODEL_NAME is None:
+    raise Exception("MODEL_NAME environment variable is required")
 
 app = FastAPI()
 model = load_learner(MODEL_FILE)
@@ -35,7 +38,7 @@ def post_classify(req: ClassifyRequest):
         print("Predicting score")
         score = classify_image(f.name)
         print("Predicted ", str(score))
-        return {"validity_score": score}
+        return {"validity_score": score, "model": MODEL_NAME}
 
 
 def classify_image(path: str) -> float:
